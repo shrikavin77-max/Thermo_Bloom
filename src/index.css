@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --kfc-red: #E4002B;
+    --kfc-red-hover: #C40024;
+    --pitch-black: #0A0A0A;
+    --card-black: #121212;
+    --pure-white: #FFFFFF;
+    --border-dark: #242424;
+    --border-light: #EEEEEE;
+  }
+
+  body {
+    background-color: #0A0A0A;
+    color: #FFFFFF;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .font-mono-code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Solid High-Contrast 2px Border Cards */
+.kfc-card {
+  background: #121212;
+  border: 2px solid #242424;
+}
+
+.kfc-card-red {
+  background: #121212;
+  border: 2px solid #E4002B;
+}
+
+.kfc-card-white {
+  background: #FFFFFF;
+  color: #0A0A0A;
+  border: 2px solid #FFFFFF;
+}
+
+/* Red Button Styling */
+.btn-red {
+  background-color: #E4002B;
+  color: #FFFFFF;
+  font-weight: 700;
+  border: 2px solid #E4002B;
+  transition: all 0.15s ease-in-out;
+}
+.btn-red:hover {
+  background-color: #C40024;
+  border-color: #C40024;
+}
+
+/* White Button Styling */
+.btn-white {
+  background-color: #FFFFFF;
+  color: #0A0A0A;
+  font-weight: 700;
+  border: 2px solid #FFFFFF;
+  transition: all 0.15s ease-in-out;
+}
+.btn-white:hover {
+  background-color: #EEEEEE;
+}
+
+/* White Outline Button */
+.btn-outline-white {
+  background-color: transparent;
+  color: #FFFFFF;
+  font-weight: 700;
+  border: 2px solid #FFFFFF;
+  transition: all 0.15s ease-in-out;
+}
+.btn-outline-white:hover {
+  background-color: #FFFFFF;
+  color: #0A0A0A;
+}
+
+/* Custom Slider Styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 9999px;
+  background: #242424;
+  border: 1px solid #333333;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #E4002B;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 0 10px rgba(228, 0, 43, 0.6);
+  margin-top: -7px;
+  transition: transform 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* Heat Flow Animation */
+@keyframes redFlow {
+  from {
+    stroke-dashoffset: 40;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.anim-red-flow {
+  animation: redFlow 1s linear infinite;
+}
+
+/* Bubble Rise */
+@keyframes algaeBubbles {
+  0% {
+    transform: translateY(100%) scale(0.6);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0%) scale(1);
+    opacity: 0;
+  }
+}
+
+.anim-bubble {
+  animation: algaeBubbles 2.2s ease-in infinite;
+}
+
+/* Heat Shimmer Waves */
+@keyframes heatShimmerWave {
+  0% {
+    transform: translateY(0) scaleX(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-8px) scaleX(1.15);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-16px) scaleX(1);
+    opacity: 0;
+  }
+}
+
+.anim-heat-shimmer {
+  animation: heatShimmerWave 1.4s ease-out infinite;
+}
+
+/* Radar Sensor Ring Pulse */
+@keyframes radarRing {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.anim-radar-ring {
+  animation: radarRing 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+/* Critical Alert Flashing Border */
+@keyframes criticalAlertPulse {
+  0%, 100% {
+    border-color: #E4002B;
+    box-shadow: 0 0 15px rgba(228, 0, 43, 0.7);
+  }
+  50% {
+    border-color: #FFFFFF;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.anim-critical-alert {
+  animation: criticalAlertPulse 0.8s ease-in-out infinite;
+}
+
+/* Pipe Fluid Particle Motion */
+@keyframes fluidParticleRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
