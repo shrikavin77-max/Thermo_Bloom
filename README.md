@@ -99,20 +99,30 @@ Switch between 6 realistic Indian data center facilities, each with distinct cap
 - Node.js **v18+** or **v20+** (tested on Node v25)
 - npm **v9+**
 
-### Installation
+### Option 1: 🖱️ 1-Click Launch (Windows File Explorer)
+Simply double-click **`run_locally.bat`** in this folder! It automatically:
+- Verifies Node.js installation
+- Installs dependencies if needed (`npm install`)
+- Starts the Vite server and pops open your default web browser directly to `http://localhost:5173/`
 
-1. Clone or open the project directory:
+---
+
+### Option 2: 💻 Command Line (Terminal / PowerShell)
+
+1. Open a terminal in the project directory:
    ```bash
    cd Thermo_Bloom
    ```
 
-2. Install dependencies:
+2. Install dependencies (if first time):
    ```bash
    npm install
    ```
 
-3. Start the local development server:
+3. Start the local development server (with auto-open browser):
    ```bash
+   npm start
+   # or
    npm run dev
    ```
 
