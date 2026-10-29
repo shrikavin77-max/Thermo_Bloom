@@ -17,13 +17,14 @@ export function App() {
           <Navbar />
           <main className="flex-grow">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<OrchestratorDashboardPage />} />
               <Route path="/orchestrator" element={<OrchestratorDashboardPage />} />
+              <Route path="/overview" element={<HomePage />} />
               <Route path="/digital-twin" element={<DigitalTwinPage />} />
               <Route path="/impact" element={<ImpactPage />} />
               <Route path="/fleet" element={<FleetPage />} />
               <Route path="/pitch" element={<PitchPage />} />
-              <Route path="*" element={<Navigate to="/orchestrator" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
           <Footer />
