@@ -4,6 +4,7 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { HomePage } from './pages/HomePage';
 import { DigitalTwinPage } from './pages/DigitalTwinPage';
+import { OrchestratorDashboardPage } from './pages/OrchestratorDashboardPage';
 import { ImpactPage } from './pages/ImpactPage';
 import { FleetPage } from './pages/FleetPage';
 import { PitchPage } from './pages/PitchPage';
@@ -12,16 +13,17 @@ export function App() {
   return (
     <SimulationProvider>
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-[#0A0A0A] text-[#FFFFFF] selection:bg-[#E4002B] selection:text-white">
+        <div className="min-h-screen flex flex-col bg-[#0A0A0A] text-[#FFFFFF] selection:bg-[#10B981] selection:text-black">
           <Navbar />
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/orchestrator" element={<OrchestratorDashboardPage />} />
               <Route path="/digital-twin" element={<DigitalTwinPage />} />
               <Route path="/impact" element={<ImpactPage />} />
               <Route path="/fleet" element={<FleetPage />} />
               <Route path="/pitch" element={<PitchPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<Navigate to="/orchestrator" replace />} />
             </Routes>
           </main>
           <Footer />

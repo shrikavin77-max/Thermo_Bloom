@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Flame,
   Droplets,
@@ -175,11 +176,15 @@ export const DigitalTwinPage: React.FC = () => {
             </h1>
           </div>
 
-          {/* AI Autopilot vs Manual Override Toggle */}
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-display font-extrabold text-slate-400 uppercase hidden sm:inline">
-              Control Mode:
-            </span>
+          {/* AI Autopilot vs Manual Override Toggle & Link to Orchestrator */}
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              to="/orchestrator"
+              className="px-3.5 py-2.5 rounded-md text-xs font-display font-extrabold uppercase tracking-wider bg-[#10B981] hover:bg-[#059669] text-black flex items-center gap-1.5 transition-all shadow-md"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Launch OpenCV Bio-Vision Cockpit</span>
+            </Link>
 
             <button
               onClick={toggleAutoPilot}

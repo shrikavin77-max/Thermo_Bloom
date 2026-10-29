@@ -9,8 +9,9 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
+    { path: '/orchestrator', label: 'AI Cockpit', badge: 'Live' },
+    { path: '/digital-twin', label: 'Digital Twin' },
     { path: '/', label: 'Overview' },
-    { path: '/digital-twin', label: 'Digital Twin', badge: 'Live' },
     { path: '/impact', label: 'Impact & ROI' },
     { path: '/fleet', label: 'Fleet Hubs' },
     { path: '/pitch', label: 'Pitch One-Pager' },
@@ -66,10 +67,10 @@ export const Navbar: React.FC = () => {
             </div>
 
             <Link
-              to="/digital-twin"
+              to="/orchestrator"
               className="btn-red px-4 py-2 rounded-md text-xs uppercase tracking-wider font-display font-extrabold flex items-center gap-2 shadow-lg"
             >
-              <span>Launch Digital Twin</span>
+              <span>Launch AI Cockpit</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
