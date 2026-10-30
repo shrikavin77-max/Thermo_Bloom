@@ -133,36 +133,11 @@ export const VisionStreamCard: React.FC<VisionStreamCardProps> = ({
     formData.append('file', file);
 
     try {
-      const resp = await fetch('http://localhost:8000/api/vision/analyze', {
-        method: 'POST',
-        body: formData,
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        setUploadedImagePreview(data.annotated_frame);
-        setUploadedDiagnostics(data.diagnostics);
-      } else {
-        // Local fallback preview
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          setUploadedImagePreview(e.target?.result as string);
-          setUploadedDiagnostics({
-            od680: 1.92,
-            biomass_g_L: 1.74,
-            health_status: 'OPTIMAL',
-            clumping_index: 0.12,
-            fouling_detected: false,
-            action: 'Sample processed: healthy Chlorella culture with high optical density.',
-            mean_hue: 58.2,
-            green_pixel_ratio: 0.975,
-            hue_shift_detected: false,
-            hue_diagnosis: 'NORMAL_GREEN',
-          });
-        };
-        reader.readAsDataURL(file);
-      }
+      const data = await backendApi.analyzeUploadedImage(formData);
+      setUploadedImagePreview(data.annotated_frame);
+      setUploadedDiagnostics(data.diagnostics);
     } catch {
-      // Fallback
+      // Local fallback preview
       const reader = new FileReader();
       reader.onload = (e) => {
         setUploadedImagePreview(e.target?.result as string);

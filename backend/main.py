@@ -12,6 +12,7 @@ and dynamic mode/surge control.
 """
 
 import asyncio
+import os
 import time
 import json
 from typing import Dict, Any, Optional
@@ -168,10 +169,30 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Enable CORS for Vite frontend
+# Configure explicit CORS origins (never combine wildcard origins with allow_credentials=True)
+DEFAULT_CORS_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+
+env_origins = os.getenv("CORS_ORIGINS", "")
+allowed_origins = list(DEFAULT_CORS_ORIGINS)
+if env_origins.strip():
+    for origin in env_origins.split(","):
+        cleaned = origin.strip().rstrip("/")
+        if cleaned and cleaned not in allowed_origins and cleaned != "*":
+            allowed_origins.append(cleaned)
+
+cors_origin_regex = os.getenv("CORS_ORIGIN_REGEX", r"https://.*\.vercel\.app")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
+    allow_origin_regex=cors_origin_regex if cors_origin_regex else None,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -364,3 +385,9 @@ async def websocket_telemetry(websocket: WebSocket):
         orchestrator.active_websockets.discard(websocket)
     except Exception:
         orchestrator.active_websockets.discard(websocket)
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=port, reload=False)

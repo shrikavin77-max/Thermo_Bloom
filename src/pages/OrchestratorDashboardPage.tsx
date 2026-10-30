@@ -65,7 +65,7 @@ export const OrchestratorDashboardPage: React.FC = () => {
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
           <a
-            href="http://localhost:8000/docs"
+            href={backendApi.getDocsUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-lg bg-[#10B981] hover:bg-[#059669] text-black font-display font-black text-xs uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-lg shadow-[#10B981]/20"

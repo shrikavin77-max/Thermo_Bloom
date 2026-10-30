@@ -136,6 +136,53 @@ npm run dev
 
 ---
 
+## ☁️ Cloud Deployment Guide (Vercel + Render)
+
+THERMO-BLOOM AI is engineered for two-tier cloud deployment: the **FastAPI + OpenCV backend on Render** and the **React + Vite frontend on Vercel**.
+
+### Step 1: Deploy Backend to Render
+
+1. Sign in to [Render](https://render.com) and click **New +** $\rightarrow$ **Web Service**.
+2. Connect your GitHub repository.
+3. Configure the following service settings:
+   - **Name:** `thermo-bloom-backend` (or your choice)
+   - **Environment:** `Python 3`
+   - **Region:** Choose the region closest to your users
+   - **Branch:** `main`
+   - **Root Directory:** *(leave blank for repository root)*
+   - **Build Command:**
+     ```bash
+     pip install -r requirements.txt
+     ```
+   - **Start Command:**
+     ```bash
+     uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+     ```
+4. In **Environment Variables**, add:
+   - `CORS_ORIGINS`: Set to your Vercel frontend URL (e.g. `https://your-thermo-bloom.vercel.app`) once known, or comma-separated list of origins.
+   - `CORS_ORIGIN_REGEX`: `https://.*\.vercel\.app` *(automatically permits Vercel preview branch deployments)*.
+5. Click **Create Web Service**. Once deployed, copy your backend URL (e.g. `https://thermo-bloom-backend.onrender.com`).
+
+---
+
+### Step 2: Deploy Frontend to Vercel
+
+1. Sign in to [Vercel](https://vercel.com) and click **Add New...** $\rightarrow$ **Project**.
+2. Import your GitHub repository.
+3. Configure project settings:
+   - **Framework Preset:** `Vite`
+   - **Root Directory:** `./`
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+4. Under **Environment Variables**, add:
+   - **Name:** `VITE_API_BASE_URL`
+   - **Value:** `https://your-backend-service.onrender.com` *(your live Render backend URL, without a trailing slash)*
+5. Click **Deploy**.
+   - React Router SPA deep links are handled automatically by [`vercel.json`](./vercel.json).
+   - The frontend will automatically derive `wss://` for secure live WebSocket telemetry.
+
+---
+
 ## 🧪 Automated Test Suite
 
 THERMO-BLOOM AI comes with a comprehensive automated test suite verifying all 4 mathematical engines and REST endpoints:

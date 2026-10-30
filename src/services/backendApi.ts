@@ -102,8 +102,31 @@ export interface UnifiedTelemetry {
   };
 }
 
-const BACKEND_BASE = 'http://localhost:8000';
-const WS_BASE = 'ws://localhost:8000';
+const resolveBackendUrls = (): { apiBase: string; wsBase: string } => {
+  const rawApi = import.meta.env.VITE_API_BASE_URL;
+  const rawWs = import.meta.env.VITE_WS_BASE_URL;
+
+  const apiBase =
+    typeof rawApi === 'string' && rawApi.trim()
+      ? rawApi.trim().replace(/\/+$/, '')
+      : 'http://localhost:8000';
+
+  let wsBase: string;
+  if (typeof rawWs === 'string' && rawWs.trim()) {
+    wsBase = rawWs.trim().replace(/\/+$/, '');
+  } else if (apiBase.startsWith('https://')) {
+    wsBase = apiBase.replace(/^https:\/\//, 'wss://');
+  } else if (apiBase.startsWith('http://')) {
+    wsBase = apiBase.replace(/^http:\/\//, 'ws://');
+  } else {
+    const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+    wsBase = isHttps ? 'wss://localhost:8000' : 'ws://localhost:8000';
+  }
+
+  return { apiBase, wsBase };
+};
+
+const { apiBase: BACKEND_BASE, wsBase: WS_BASE } = resolveBackendUrls();
 
 class BackendApiService {
   private ws: WebSocket | null = null;
@@ -407,6 +430,29 @@ class BackendApiService {
 
   public getVisionStreamUrl(): string {
     return `${BACKEND_BASE}/api/vision/stream`;
+  }
+
+  public getApiBaseUrl(): string {
+    return BACKEND_BASE;
+  }
+
+  public getWsBaseUrl(): string {
+    return WS_BASE;
+  }
+
+  public getDocsUrl(): string {
+    return `${BACKEND_BASE}/docs`;
+  }
+
+  public async analyzeUploadedImage(formData: FormData): Promise<{ annotated_frame: string; diagnostics: VisionDiagnostics }> {
+    const resp = await fetch(`${BACKEND_BASE}/api/vision/analyze`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!resp.ok) {
+      throw new Error(`Vision analysis failed with HTTP ${resp.status}`);
+    }
+    return await resp.json();
   }
 
   public isBackendLive(): boolean {
